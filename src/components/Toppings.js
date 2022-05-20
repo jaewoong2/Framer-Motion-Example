@@ -1,32 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
 
-const Toppings = ({ addTopping, pizza }) => {
-  let toppings = ['mushrooms', 'peppers', 'onions', 'olives', 'extra cheese', 'tomatoes'];
+let TOPPINGS = [
+  "mushrooms",
+  "peppers",
+  "onions",
+  "olives",
+  "extra cheese",
+  "tomatoes",
+];
+
+const Toppings = ({ toggleTopping, pizza }) => {
+  const getSapnClass = useCallback(
+    (topping) => {
+      return pizza.toppings.includes(topping) ? "active" : "";
+    },
+    [pizza]
+  );
 
   return (
     <div className="toppings container">
-      
       <h3>Step 2: Choose Toppings</h3>
       <ul>
-        {toppings.map(topping => {
-          let spanClass = pizza.toppings.includes(topping) ? 'active' : '';
-          return (
-            <li key={topping} onClick={() => addTopping(topping)}>
-              <span className={spanClass}>{ topping }</span>
-            </li>
-          )
-        })}
+        {TOPPINGS.map((topping) => (
+          <li key={topping} onClick={() => toggleTopping(topping)}>
+            <span className={getSapnClass(topping)}>{topping}</span>
+          </li>
+        ))}
       </ul>
 
       <Link to="/order">
-        <button>
-          Order
-        </button>
+        <button>Order</button>
       </Link>
-
     </div>
-  )
-}
+  );
+};
 
 export default Toppings;
