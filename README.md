@@ -56,6 +56,19 @@ const nextVariants = {
 - `animate`
 
   - `transition` 에 정의 된 방법으로 `animate` 동작
+  - type of Transition: `Tween`, `Spring`, `Inertia`
+    ```jsx
+    // spring을 어느정도로 하냐
+    mass: 0.5,
+    // spring을 damping 시간 만큼 작동
+    damping: 10,
+    /**For instance, if staggerChildren is 0.01,
+     * the first child will be delayed by 0 seconds,
+    * the second by 0.01, the third by 0.02 and so on.
+    * The calculated stagger delay will be added to delayChildren.
+    */
+    staggerChildren: 0.1,
+    ```
   - `keyframes` 사용법: `Array` 형태로 값을 제공
   - ```jsx
     export const MyComponent = () => (
@@ -94,9 +107,21 @@ const nextVariants = {
 
     `custom` 값에 `value`를 넣어 주면 `function` 값의 `variant`가 `custom value `를 `resolve` 한다
 
-- `gestures`
-- `variants`
-
 - `initial`
   - `Server-side Rendering` 을 하여, `initial` 값을 클라이언트에서 렌더링 되기전에 `Style`에 적용 시킨다.
   - `initial={false}` 이면, `animate` 되지 않고, `animate` 값을 서버사이드 렌더링 과정에서 적용 시킨다.
+
+### AnimatePresence
+
+- Key 값으로 Component 들을 관리하며,
+- Dom이 Dom 트리에서 제거가 되면 `exit` 으로 정의한 animation을 작동 시키는 역할을 한다.
+- `관리하고싶은 Component 들 을 감싸는 형태로 코드를 작성 하면 된다`
+
+```jsx
+<AnimatePresence>
+  <WatchComponent1 exit="hide" />
+  <WatchComponent2 exit="slide" />
+</AnimatePresence>
+```
+
+### yoyo: 요요처럼 작동하는 애니메이션
